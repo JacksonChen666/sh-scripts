@@ -1,31 +1,31 @@
 #!/bin/bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)";
-brew install ffmpeg python3;
-pip3 install pillow audiotsm scipy numpy pytube;
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"; # Installs brew
+brew install ffmpeg python3 git; # Installs ffmpeg for the program, python3 for the program, and git for the jumpcutter
+pip3 install pillow audiotsm scipy numpy pytube; # Installs all the libraries from the requirements.txt file
 
+cd $(dirname "$0"); # Change directory to where the script is (Use cd locally is it has no effect)
+echo $PWD; # Prints directory
+git clone https://github.com/carykh/jumpcutter.git; # Gets the main file, the jumpcutter.py
+cd jumpcutter; # Goes into the folder
+
+printf '#!/bin/bash
 cd $(dirname "$0");
-echo "#!/bin/bash" >> jumpcutter.command;
-echo "cd $(dirname \"$0\");" >> jumpcutter.command;
-echo "clear;" >> jumpcutter.command;
-echo "echo The directory is:;" >> jumpcutter.command;
-echo "echo $PWD;" >> jumpcutter.command;
-echo "echo ;" >> jumpcutter.command;
-echo "echo Make sure the videos are in the same folder as of the file;" >> jumpcutter.command;
-echo "echo Make sure that you don\\'t have any unnecessary videos in the folder;" >> jumpcutter.command;
-echo "echo The script only works with the following video files: MP4, MOV, M4A;" >> jumpcutter.command;
-echo "echo Make sure the temp folder does not exists or else the script won\\'t work;" >> jumpcutter.command;
-echo "echo ;" >> jumpcutter.command;
-echo "echo To cancel this operation, use Control+C to stop \\(Command+C does not work\\);" >> jumpcutter.command;
-echo "read -p \"Enter video format (press return for MP4): \" format;" >> jumpcutter.command;
-echo "format=${format:-mp4}" >> jumpcutter.command;
-echo "Read -p "Extra parameters (optional): " params;" >> jumpcutter.command;
-echo "echo $params" >> jumpcutter.command;
-echo "" >> jumpcutter.command;
-echo "for f in ./*.$format;" >> jumpcutter.command;
-echo "do python3 jumpcutter.py --input_file "$f""$params";" >> jumpcutter.command;
-echo "done;" >> jumpcutter.command;
-echo "" >> jumpcutter.command;
-echo "echo Done! Press enter to continue;" >> jumpcutter.command;
-echo "read;" >> jumpcutter.command;
+clear;
+echo The directory is:;
+echo $PWD;
+echo ;
+echo Make sure the videos are in the same folder as of the file;
+echo Make sure that you have no unnecessary videos in the folder;
+echo The script only works with the following video files: MP4, MOV, M4A;
+echo Make sure the temp folder does not exist or else the script will not work;
+echo ;
+echo To cancel this operation, use Control+C to stop;
+read -p "Enter video format (press return for MP4): " format;
+format=${format:-mp4}
+Read -p "Extra parameters (optional): " params;
+echo $params
 
+for f in ./*.$format;
+do python3 jumpcutter.py --input_file "$f""$params";
+done;' > jumpcutter.command; # Writes the file to simplify
 chmod 777 jumpcutter.command;
