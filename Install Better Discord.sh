@@ -3,7 +3,11 @@ if [[ -d "Better Discord.app" ]]
 then
 	echo "You have already installed it! Remove it to reinstall"
 fi
-if [[ ! -d "Better Discord.app" ]]
+if [[ ! -d "Discord.app" ]]
+then
+	echo "Discord not found. Please make sure it is in the applications folder."
+fi
+if [[ ! -d "Better Discord.app" ]] && [[ -d "Discord.app" ]]
 then
 	echo "Duplicating Discord..."
 	cp -r /Applications/Discord.app /Applications/Better\ Discord.app
